@@ -23,6 +23,13 @@ else
 	then 
 		exit 1 
 	fi
+	#rsync Documents 
+	rsync -avz ~/Documents/ john@192.168.1.50:/mnt/fs1/home/john/Documents/ --filter="- ISOs" --filter="- Virtual*"
+
+	if  [ $? -ne 0 ] 
+	then 
+		exit 1 
+	fi
 
 fi
 	exit 0
