@@ -21,5 +21,11 @@ export https_proxy
 #add path for ~/Applications directory
 export PATH=/Users/jc18/bin:$PATH
 
+#alias for getting the HBA info from a system
+alias Get-HBA-Info='systool -c fc_host -A port_name'
+
+#aide memoir for flushing the DNS cahce
+alias flushcache='sudo killall -HUP mDNSResponder'
+
 #why MacOSX Doesn't do this I have no idea
 source ~/.bashrc
