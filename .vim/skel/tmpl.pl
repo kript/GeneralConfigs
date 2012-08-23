@@ -1,12 +1,13 @@
-#!/software/bin/perl-5.12.2 -w -t
+#!/usr/bin/env perl
 # template script to run on linux/cluster machines with embedded documentation and command parsing
 
 use strict;
-use v5.12.2; #make use of the say command and other nifty perl 10.0 onwards goodness
+use warnings;
+use v5.10; #make use of the say command and other nifty perl 10.0 onwards goodness
 use Carp;
 
 #set the version number in a way Getopt::Euclid can parse
-BEGIN { use version; our $VERSION = qv('0.1.1_3') }
+BEGIN { use version; our $VERSION = qv('0.1.1_1') }
 
 use Getopt::Euclid; # Create a command-line parser that implements the documentation below... 
 
