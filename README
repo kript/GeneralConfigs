@@ -2,3 +2,7 @@ This is where I plan to keep all my non confidential config files.
 
 Things like perl templates, Vim and bashrc etc etc.
 
+I've added a script at bin/Deploy.sh which when run from there will create all the right directories 
+ and roll it out.  Check it out and be sure you want it to do this as it will overwrite files, including
+ the bash configs!
+I've added a backup option that puts the overwritten versions into ~/deployment_backups
