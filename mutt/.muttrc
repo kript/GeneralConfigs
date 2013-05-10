@@ -1,0 +1,92 @@
+set realname="John Constable"
+set from = jc18@sanger.ac.uk
+#set alternates=(jc18@sanger.ac.uk|john@kript.net)
+
+set record="+sent"
+set postponed="+postponed"
+set move=no
+
+#imap config
+set imap_user=jc18
+#set imap_user = "jc18@imapproxy.sanger.ac.uk"
+#set imap_pass = ""
+#set folder = "imaps://imapproxy.sanger.ac.uk:465"
+set folder=imap://mail.sanger.ac.uk/INBOX
+
+set spoolfile = imap://mail.sanger.ac.uk/INBOX
+set imap_check_subscribed
+set hostname = sanger.ac.uk
+
+set mail_check = 120
+set timeout = 300
+set imap_keepalive = 300
+
+#smtp config
+#set smtp_url = "smtp://jc18@mail.sanger.ac.uk:465/"
+#set smtp_pass = ""
+
+set editor="vim -c 'set tw=70 et' '+/^$' " 
+set edit_headers          # See the headers when editing
+
+set signature        = ~/.signature           # my signature file
+
+
+#======================================================#
+# Order of headers and what to show
+hdr_order Date: From: User-Agent: X-Mailer \
+          To: Cc: Reply-To: Subject:
+ignore *
+unignore Date: From: User-Agent: X-Mailer  \
+         To: Cc: Reply-To: Subject:
+auto_view text/html
+auto_view text/x-vcard
+auto_view application/octet-stream
+auto_view application/msword
+
+
+#======================================================#
+# Odds and ends
+set markers          # mark wrapped lines of text in the pager with a +
+set smart_wrap       # Don't wrap mid-word
+set pager_context=5  # Retain 5 lines of previous page when scrolling.
+set status_on_top    # Status bar on top.
+push <show-version>  # Shows mutt version at startup
+set sort = 'threads'
+#set sort_aux = 'reverse-last-date-received'
+
+#       #
+#       # pager
+#       #
+#       # The builtin pager supports colour, which is nice. However, some of
+#       # its default behaviour can be confusing if one is used to the use
+#       of
+#       # less(1) as external pager.
+#       #
+#
+bind pager      b       previous-page   # Instead of bounce
+#       bind pager      G       bottom          # Previously unbound
+#
+bind pager      j       next-line       # Instead of next-message
+bind pager      k       previous-line   # Instead of
+bind pager      <down>  next-line
+bind pager      <up>    previous-line
+#       previous-message
+#       set pager_stop
+#
+#
+#       #
+#       # Other keybindings
+#       #
+#
+#       bind index      <       previous-page   # like strn's overview
+#       bind index      >       next-page
+
+# Sidebar Patch --------------------------------------
+set sidebar_delim   = '  │'
+set sidebar_visible = yes
+set sidebar_width   = 24
+color sidebar_new color221 color233
+
+# query command to use MacOSX Address book
+set query_command = "contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
+
