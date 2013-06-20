@@ -2,8 +2,8 @@ set realname="John Constable"
 set from = jc18@sanger.ac.uk
 #set alternates=(jc18@sanger.ac.uk|john@kript.net)
 
-set record="+sent"
-set postponed="+postponed"
+#set record="+sent"
+#set postponed="+postponed"
 set move=no
 
 #imap config
@@ -11,25 +11,55 @@ set imap_user=jc18
 #set imap_user = "jc18@imapproxy.sanger.ac.uk"
 #set imap_pass = ""
 #set folder = "imaps://imapproxy.sanger.ac.uk:465"
-set folder=imap://mail.sanger.ac.uk/INBOX
+set folder=imaps://zuul.sanger.ac.uk/INBOX
+#set trash="=Trash"
+set record="=Sent"
+set postponed="=Drafts"
+set askcc
+# always make a copy of outgoing msgs
+set copy
+# stop asking to append to mail folders
+unset confirmappend
+# unread mails retain "New" status
+set nomark_old
 
-set spoolfile = imap://mail.sanger.ac.uk/INBOX
+
+set spoolfile=imaps://zuul.sanger.ac.uk/INBOX
 set imap_check_subscribed
-set hostname = sanger.ac.uk
+set hostname=sanger.ac.uk
 
 set mail_check = 120
 set timeout = 300
 set imap_keepalive = 300
+# keep a cache of headers for faster loading (1.5.9+?)
+set header_cache=~/.muttcache
+# Display download progress every 5K
+set net_inc=5
+
 
 #smtp config
-#set smtp_url = "smtp://jc18@mail.sanger.ac.uk:465/"
+set smtp_url = "smtps://jc18@zuul.sanger.ac.uk:465/"
 #set smtp_pass = ""
 
 set editor="vim -c 'set tw=70 et' '+/^$' " 
 set edit_headers          # See the headers when editing
-
 set signature        = ~/.signature           # my signature file
 
+#reply to senders email address and subject
+set fast_reply=yes
+#include original message with reply
+set include=yes
+#ensure attachmanets are forwarded with a message
+set mime_forward = yes
+set mime_forward_rest = yes
+#pads the screen at the end of the message with tildes 
+##to indicate the end of file (the same way vim does)
+set tilde
+
+
+#spelling stuff
+## change spell default to one that recog mail headers
+set ispell="~/homebrew/bin/aspell -e -c"
 
 #======================================================#
 # Order of headers and what to show
@@ -42,6 +72,7 @@ auto_view text/html
 auto_view text/x-vcard
 auto_view application/octet-stream
 auto_view application/msword
+#html viewing handled by w3m in .mailcap file
 
 
 #======================================================#
@@ -54,14 +85,13 @@ push <show-version>  # Shows mutt version at startup
 set sort = 'threads'
 #set sort_aux = 'reverse-last-date-received'
 
-#       #
-#       # pager
-#       #
-#       # The builtin pager supports colour, which is nice. However, some of
-#       # its default behaviour can be confusing if one is used to the use
-#       of
-#       # less(1) as external pager.
-#       #
+#     #
+#     # pager
+#     #
+#     # The builtin pager supports colour, which is nice. However, some of
+#     # its default behaviour can be confusing if one is used to the use of
+#     # less(1) as external pager.
+#     #
 #
 bind pager      b       previous-page   # Instead of bounce
 #       bind pager      G       bottom          # Previously unbound
@@ -82,11 +112,52 @@ bind pager      <up>    previous-line
 #       bind index      >       next-page
 
 # Sidebar Patch --------------------------------------
-set sidebar_delim   = '  │'
-set sidebar_visible = yes
-set sidebar_width   = 24
-color sidebar_new color221 color233
+#set sidebar_visible = yes
+#set sidebar_delim   = '  │'
+#set sidebar_width   = 24
+#color sidebar_new color221 color233
 
 # query command to use MacOSX Address book
 set query_command = "contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
 
+#use urlview and ~/.urlview to open links in default browser
+#  using Ctrl-u
+macro pager \Cu "|urlview<enter>" "call urlview to open links"
+
+##pretification
+# Status Bar -----------------------------------------
+set status_chars  = " *%A"
+#set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+set status_format = '-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F    ?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---'
+
+#colours
+color indicator  brightyellow  red
+color indicator  black         white
+color search     default       green
+color error      brightred     default
+color tree       brightyellow  default       # thread arrows 
+color attachment brightmagenta default
+color tilde      magenta       default
+
+color index     blue	default    ~N # New
+color index     brightwhite    default       ~D
+
+color hdrdefault white         black         # headers white on black
+color header     green         black         ^From: # sender's name in green
+color header     yellow        black         ^To:
+color header     cyan          black         ^Subject:
+color quoted     cyan          black         # quoted text in blue
+color quoted1    magenta       default 
+color quoted2    yellow        default 
+color quoted3    green         default 
+color signature  magenta       black         # signature in red
+color body       cyan          default       "((ftp|http|https)://|news:)[^ >)\"\t]+"
+color body       cyan          default       "[-a-z_0-9.+]+@[-a-z_0-9.]+"
+color markers    brightyellow  default       # + at beginning of wrapped lines 
+color bold       red           default       # hiliting bold patterns in body 
+color underline  green         default       # hiliting underlined patterns in body
+
+#important people highlighting
+color index	red	default	pnb@sanger.ac.uk
+color index	red	default	tjrc@sanger.ac.uk
+color index	red	default	ce1@sanger.ac.uk
