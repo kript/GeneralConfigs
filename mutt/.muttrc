@@ -65,6 +65,8 @@ set mime_forward_rest = yes
 #pads the screen at the end of the message with tildes 
 ##to indicate the end of file (the same way vim does)
 set tilde
+#make EOL better as per http://wcm1.web.rice.edu/mutt-tips.html
+set text_flowed=yes
 
 
 #spelling stuff
