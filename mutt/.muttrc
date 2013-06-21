@@ -1,20 +1,28 @@
 set realname="John Constable"
-set from = jc18@sanger.ac.uk
+#set from = jc18@sanger.ac.uk
 #set alternates=(jc18@sanger.ac.uk|john@kript.net)
 
-#set record="+sent"
-#set postponed="+postponed"
+#Sanger Config
+folder-hook 'Sanger' 'source ~/.mutt/sanger'
+folder-hook 'Teaparty' 'source ~/.mutt/teaparty'
+
+#set to default on startup
+source ~/.mutt/sanger
+
+#function keys to load account files 
+# (Fn+F10 for Mac OS)
+macro index <F5> '<sync-mailbox><enter-command>source ~/.mutt/sanger<enter><change-folder>!<enter>'
+macro index <F6> '<sync-mailbox><enter-command>source ~/.mutt/teaparty<enter><change-folder>!<enter>'
+
+
 set move=no
 
-#imap config
-set imap_user=jc18
-#set imap_user = "jc18@imapproxy.sanger.ac.uk"
-#set imap_pass = ""
-#set folder = "imaps://imapproxy.sanger.ac.uk:465"
-set folder=imaps://zuul.sanger.ac.uk/INBOX
-#set trash="=Trash"
-set record="=Sent"
-set postponed="=Drafts"
+##imap config
+#set imap_user=jc18
+#set folder=imaps://zuul.sanger.ac.uk/INBOX
+##set trash="=Trash"
+#set record="=Sent-`date +"%y%m"`"
+#set postponed="=Drafts"
 set askcc
 # always make a copy of outgoing msgs
 set copy
@@ -24,26 +32,28 @@ unset confirmappend
 set nomark_old
 
 
-set spoolfile=imaps://zuul.sanger.ac.uk/INBOX
+#set spoolfile=imaps://zuul.sanger.ac.uk/INBOX
 set imap_check_subscribed
-set hostname=sanger.ac.uk
+#set hostname=sanger.ac.uk
 
 set mail_check = 120
 set timeout = 300
 set imap_keepalive = 300
 # keep a cache of headers for faster loading (1.5.9+?)
-set header_cache=~/.muttcache
+set header_cache=~/.mutt/.muttcache
 # Display download progress every 5K
 set net_inc=5
 
 
-#smtp config
-set smtp_url = "smtps://jc18@zuul.sanger.ac.uk:465/"
-#set smtp_pass = ""
+##smtp config
+#set smtp_url = "smtps://jc18@zuul.sanger.ac.uk:465/"
+##set smtp_pass = ""
 
 set editor="vim -c 'set tw=70 et' '+/^$' " 
+#enable auto spell checking/highlighting with vim
+#set editor="vim -c '+normal \\ec set tw=70 et' '+/^$/'" 
 set edit_headers          # See the headers when editing
-set signature        = ~/.signature           # my signature file
+#set signature        = ~/.signature           # my signature file
 
 #reply to senders email address and subject
 set fast_reply=yes
@@ -127,7 +137,6 @@ macro pager \Cu "|urlview<enter>" "call urlview to open links"
 ##pretification
 # Status Bar -----------------------------------------
 set status_chars  = " *%A"
-#set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
 set status_format = '-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F    ?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---'
 
 #colours
@@ -158,6 +167,7 @@ color bold       red           default       # hiliting bold patterns in body
 color underline  green         default       # hiliting underlined patterns in body
 
 #important people highlighting
+#Sanger
 color index	red	default	pnb@sanger.ac.uk
 color index	red	default	tjrc@sanger.ac.uk
 color index	red	default	ce1@sanger.ac.uk
