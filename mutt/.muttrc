@@ -1,5 +1,4 @@
 set realname="John Constable"
-#set from = jc18@sanger.ac.uk
 #set alternates=(jc18@sanger.ac.uk|john@kript.net)
 
 #Sanger Config
@@ -17,12 +16,7 @@ macro index <F6> '<sync-mailbox><enter-command>source ~/.mutt/teaparty<enter><ch
 
 set move=no
 
-##imap config
-#set imap_user=jc18
-#set folder=imaps://zuul.sanger.ac.uk/INBOX
-##set trash="=Trash"
-#set record="=Sent-`date +"%y%m"`"
-#set postponed="=Drafts"
+#prompt to add a CC on every mail
 set askcc
 # always make a copy of outgoing msgs
 set copy
@@ -32,10 +26,7 @@ unset confirmappend
 set nomark_old
 
 
-#set spoolfile=imaps://zuul.sanger.ac.uk/INBOX
 set imap_check_subscribed
-#set hostname=sanger.ac.uk
-
 set mail_check = 120
 set timeout = 300
 set imap_keepalive = 300
@@ -45,15 +36,8 @@ set header_cache=~/.mutt/.muttcache
 set net_inc=5
 
 
-##smtp config
-#set smtp_url = "smtps://jc18@zuul.sanger.ac.uk:465/"
-##set smtp_pass = ""
-
-set editor="vim -c 'set tw=70 et' '+/^$' " 
-#enable auto spell checking/highlighting with vim
-#set editor="vim -c '+normal \\ec set tw=70 et' '+/^$/'" 
-set edit_headers          # See the headers when editing
-#set signature        = ~/.signature           # my signature file
+# See the headers when editing
+set edit_headers          
 
 #reply to senders email address and subject
 set fast_reply=yes
@@ -72,6 +56,7 @@ set text_flowed=yes
 #spelling stuff
 ## change spell default to one that recog mail headers
 set ispell="~/homebrew/bin/aspell -e -c"
+set editor="vim -c 'set tw=70 et' '+/^$' " #enable auto spell 
 
 #======================================================#
 # Order of headers and what to show
@@ -81,9 +66,9 @@ ignore *
 unignore Date: From: User-Agent: X-Mailer  \
          To: Cc: Reply-To: Subject:
 auto_view text/html
-auto_view text/x-vcard
+#auto_view text/x-vcard
 auto_view application/octet-stream
-auto_view application/msword
+#auto_view application/msword
 #html viewing handled by w3m in .mailcap file
 
 
@@ -129,8 +114,13 @@ bind pager      <up>    previous-line
 #set sidebar_width   = 24
 #color sidebar_new color221 color233
 
+## Contacts stuff
 # query command to use MacOSX Address book
 set query_command = "contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
+
+# filters new messages through a shell script that automatically generates a 
+# mutt alias for new senders
+set display_filter=$HOME/.mutt/createalias.sh
 
 #use urlview and ~/.urlview to open links in default browser
 #  using Ctrl-u

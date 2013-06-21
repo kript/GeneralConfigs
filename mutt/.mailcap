@@ -1,4 +1,4 @@
-text/html; ~/homebrew/bin/w3m -I %{charset} -T text/html -dump; copiousoutput;
+#text/html; ~/homebrew/bin/w3m -I %{charset} -T text/html -dump; copiousoutput;
 
 ## Images
 image/jpeg;	/Users/jc18/bin/View_attachment.sh %s "-" '/Applications/Preview.app'
