@@ -2,7 +2,7 @@ set from = john@kript.net
 set hostname=kript.net
 #IMAP stuff
 set imap_user=john
-set folder=imaps://teaparty.net/INBOX
+set folder=imaps://teaparty.net/mail
 set record="=Sent-`date +"%y%m"`"
 set postponed="=Drafts"
 set spoolfile=imaps://teaparty.net/INBOX
