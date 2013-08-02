@@ -12,6 +12,6 @@ set printoptions=paper:a4
 ":setlocal spell spelllang=en_gb
 "text flowing for mutt emails
 "  as per http://wcm1.web.rice.edu/mutt-tips.html
-setlocal fo+=aw
+"setlocal fo+=aw
 "only do spell checking in mutt emails however!
 autocmd FileType mail set spell
