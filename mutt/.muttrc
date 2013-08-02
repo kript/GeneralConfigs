@@ -1,6 +1,10 @@
 set realname="John Constable"
 #set alternates=(jc18@sanger.ac.uk|john@kript.net)
 
+#Local Settings
+#set xterm_set_titles="yes"
+#set xterm_title="Mutt %?b?[NEW mail in %b mailboxes]? %f %?m?%m messages&no messages?%?n? [%n NEW]?"
+
 #Sanger Config
 folder-hook 'Sanger' 'source ~/.mutt/sanger'
 folder-hook 'Teaparty' 'source ~/.mutt/teaparty'
@@ -56,7 +60,10 @@ set text_flowed=yes
 #spelling stuff
 ## change spell default to one that recog mail headers
 set ispell="~/homebrew/bin/aspell -e -c"
-set editor="vim -c 'set tw=70 et' '+/^$' " #enable auto spell 
+#set editor="vim -c 'set tw=70 et' '+/^$' " #enable auto spell 
+## Make Vim work with flowed text and add spell checking
+set editor='vim "+setlocal spell spelllang=en_gb fo+=aw"'
+set visual='vim "+setlocal spell spelllang=en_gb fo+=aw"'
 
 #======================================================#
 # Order of headers and what to show
@@ -70,6 +77,14 @@ auto_view text/html
 auto_view application/octet-stream
 #auto_view application/msword
 #html viewing handled by w3m in .mailcap file
+
+
+#======================================================#
+#PGP Stuff (Not configured)
+#set crypt_verify_sig="yes"
+#set pgp_sign_as="0x41D8CB10"
+#set crypt_autosign="yes"
+#set pgp_timeout="1800"
 
 
 #======================================================#
@@ -114,6 +129,11 @@ bind pager      <up>    previous-line
 #set sidebar_width   = 24
 #color sidebar_new color221 color233
 
+###----------------------------------------------------------------------------
+### Aliases & Contact stuff
+###----------------------------------------------------------------------------
+
+
 ## Contacts stuff
 # query command to use MacOSX Address book
 set query_command = "contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
@@ -121,12 +141,17 @@ set query_command = "contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
 # filters new messages through a shell script that automatically generates a 
 # mutt alias for new senders
 set display_filter=$HOME/.mutt/createalias.sh
+set alias_file=~/.mutt/aliases.txt
 
 #use urlview and ~/.urlview to open links in default browser
 #  using Ctrl-u
 macro pager \Cu "|urlview<enter>" "call urlview to open links"
 
-##pretification
+
+
+###----------------------------------------------------------------------------
+### pretification
+###----------------------------------------------------------------------------
 # Status Bar -----------------------------------------
 set status_chars  = " *%A"
 set status_format = '-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F    ?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---'
