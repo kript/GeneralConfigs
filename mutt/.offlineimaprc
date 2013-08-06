@@ -10,13 +10,14 @@ localrepository = SangerZuul-local
 remoterepository = SangerZuul-remote
 status_backend = sqlite
 #postsynchook = new
+autorefresh = 5
 
 [Repository SangerZuul-local]
 type = Maildir
 localfolders = ~/.mail/sanger.ac.uk
 
 [Repository SangerZuul-remote]
-maxconnections = 1
+maxconnections = 2
 type = IMAP
 remotehost = zuul.sanger.ac.uk
 ssl = yes
