@@ -10,3 +10,4 @@ set spoolfile="=INBOX"
 set smtp_url = "smtps://jc18@zuul.sanger.ac.uk:465/"
 #mail presentation stuff
 set signature        = ~/.signature
+set mbox_type=Maildir
