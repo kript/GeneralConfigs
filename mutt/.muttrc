@@ -6,15 +6,17 @@ set realname="John Constable"
 #set xterm_title="Mutt %?b?[NEW mail in %b mailboxes]? %f %?m?%m messages&no messages?%?n? [%n NEW]?"
 
 #Sanger Config
-folder-hook 'Sanger' 'source ~/.mutt/sanger'
+#folder-hook 'Sanger' 'source ~/.mutt/sanger'
+folder-hook 'Sanger' 'source ~/.mutt/sanger.offlineimap'
 folder-hook 'Teaparty' 'source ~/.mutt/teaparty'
 
 #set to default on startup
-source ~/.mutt/sanger
+source ~/.mutt/sanger.offlineimap
 
 #function keys to load account files 
 # (Fn+F10 for Mac OS)
-macro index <F5> '<sync-mailbox><enter-command>source ~/.mutt/sanger<enter><change-folder>!<enter>'
+#macro index <F5> '<sync-mailbox><enter-command>source ~/.mutt/sanger<enter><change-folder>!<enter>'
+macro index <F5> '<sync-mailbox><enter-command>source ~/.mutt/sanger.offlineimap<enter><change-folder>!<enter>'
 macro index <F6> '<sync-mailbox><enter-command>source ~/.mutt/teaparty<enter><change-folder>!<enter>'
 
 
@@ -64,6 +66,10 @@ set ispell="~/homebrew/bin/aspell -e -c"
 ## Make Vim work with flowed text and add spell checking
 set editor='vim "+setlocal spell spelllang=en_gb fo+=aw"'
 set visual='vim "+setlocal spell spelllang=en_gb fo+=aw"'
+
+#searching using notmuch
+macro index S "<enter-command>unset wait_key<enter><shell-escape> ~/bin/mutt-notmuch-py.py ~/.mail/temporary/search<enter><change-folder-readonly>~/.mail/temporary/search<enter>" "search mail (using notmuch)"
+
 
 #======================================================#
 # Order of headers and what to show
@@ -137,6 +143,8 @@ bind pager      <up>    previous-line
 ## Contacts stuff
 # query command to use MacOSX Address book
 set query_command = "contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
+bind editor <Tab> complete-query
+bind editor ^T    complete
 
 # filters new messages through a shell script that automatically generates a 
 # mutt alias for new senders
