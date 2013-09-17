@@ -9,7 +9,7 @@ fsync = False
 localrepository = SangerZuul-local
 remoterepository = SangerZuul-remote
 status_backend = sqlite
-#postsynchook = new
+postsynchook = notmuch new
 autorefresh = 5
 
 [Repository SangerZuul-local]
@@ -23,3 +23,4 @@ remotehost = zuul.sanger.ac.uk
 ssl = yes
 cert_fingerprint = 10a21c067fd81a1ffb8912342e77f2e13d38cc07
 remoteuser = jc18
+remotepasseval = get_keychain_pass(account="jc18", server="zuul.sanger.ac.uk")
