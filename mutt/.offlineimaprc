@@ -21,6 +21,6 @@ maxconnections = 2
 type = IMAP
 remotehost = zuul.sanger.ac.uk
 ssl = yes
-cert_fingerprint = 10a21c067fd81a1ffb8912342e77f2e13d38cc07
+cert_fingerprint = 84e7c97f0a464e1b83d009da9ae399e3555de76d
 remoteuser = jc18
 remotepasseval = get_keychain_pass(account="jc18", server="zuul.sanger.ac.uk")
