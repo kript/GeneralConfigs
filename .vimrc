@@ -1,5 +1,5 @@
 "use \" for comments
-"get vim to laod templates from this skeleton file area
+"get vim to load templates from this skeleton file area
 "  where extentions are defined
 autocmd! BufNewFile * silent! 0r ~/.vim/skel/tmpl.%:e
 "enable syntax highlighting
@@ -15,3 +15,4 @@ set printoptions=paper:a4
 "setlocal fo+=aw
 "only do spell checking in mutt emails however!
 autocmd FileType mail set spell
+autocmd FileType mail setlocal fo+=aw
