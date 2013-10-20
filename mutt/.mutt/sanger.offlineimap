@@ -1,0 +1,13 @@
+set from = jc18@sanger.ac.uk
+set hostname=sanger.ac.uk
+#IMAP stuff
+set imap_user=jc18
+set folder = "~/.mail/sanger.ac.uk/"
+set record="=Sent-`date +"%y%m"`"
+set postponed="=Drafts"
+set spoolfile="=INBOX"
+#smtp config
+set smtp_url = "smtps://jc18@zuul.sanger.ac.uk:465/"
+#mail presentation stuff
+set signature        = ~/.signature
+set mbox_type=Maildir

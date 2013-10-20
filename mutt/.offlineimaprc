@@ -1,0 +1,26 @@
+[general]
+#ui = TTY.TTYUI
+ui = blinkenlights
+accounts = SangerZuul
+pythonfile=~/.mutt/offlineimap.py
+fsync = False
+
+[Account SangerZuul]
+localrepository = SangerZuul-local
+remoterepository = SangerZuul-remote
+status_backend = sqlite
+postsynchook = notmuch new
+autorefresh = 5
+
+[Repository SangerZuul-local]
+type = Maildir
+localfolders = ~/.mail/sanger.ac.uk
+
+[Repository SangerZuul-remote]
+maxconnections = 2
+type = IMAP
+remotehost = zuul.sanger.ac.uk
+ssl = yes
+cert_fingerprint = 84e7c97f0a464e1b83d009da9ae399e3555de76d
+remoteuser = jc18
+remotepasseval = get_keychain_pass(account="jc18", server="zuul.sanger.ac.uk")

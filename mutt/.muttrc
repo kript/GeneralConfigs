@@ -1,0 +1,198 @@
+set realname="John Constable"
+#set alternates=(jc18@sanger.ac.uk|john@kript.net)
+
+#Local Settings
+#set xterm_set_titles="yes"
+#set xterm_title="Mutt %?b?[NEW mail in %b mailboxes]? %f %?m?%m messages&no messages?%?n? [%n NEW]?"
+
+#Sanger Config
+#folder-hook 'Sanger' 'source ~/.mutt/sanger'
+folder-hook 'Sanger' 'source ~/.mutt/sanger.offlineimap'
+folder-hook 'Teaparty' 'source ~/.mutt/teaparty'
+
+#set to default on startup
+source ~/.mutt/sanger.offlineimap
+
+#function keys to load account files 
+# (Fn+F10 for Mac OS)
+#macro index <F5> '<sync-mailbox><enter-command>source ~/.mutt/sanger<enter><change-folder>!<enter>'
+macro index <F5> '<sync-mailbox><enter-command>source ~/.mutt/sanger.offlineimap<enter><change-folder>!<enter>'
+macro index <F6> '<sync-mailbox><enter-command>source ~/.mutt/teaparty<enter><change-folder>!<enter>'
+
+
+set move=no
+
+#prompt to add a CC on every mail
+set askcc
+# always make a copy of outgoing msgs
+set copy
+# stop asking to append to mail folders
+unset confirmappend
+# unread mails retain "New" status
+set nomark_old
+
+
+set imap_check_subscribed
+set mail_check = 120
+set timeout = 300
+set imap_keepalive = 300
+# keep a cache of headers for faster loading (1.5.9+?)
+set header_cache=~/.mutt/.muttcache
+# Display download progress every 5K
+set net_inc=5
+
+
+# See the headers when editing
+set edit_headers          
+
+#reply to senders email address and subject
+set fast_reply=yes
+#include original message with reply
+set include=yes
+#ensure attachmanets are forwarded with a message
+set mime_forward = yes
+set mime_forward_rest = yes
+#pads the screen at the end of the message with tildes 
+##to indicate the end of file (the same way vim does)
+set tilde
+#make EOL better as per http://wcm1.web.rice.edu/mutt-tips.html
+set text_flowed=yes
+
+
+#spelling stuff
+## change spell default to one that recog mail headers
+set ispell="~/homebrew/bin/aspell -e -c"
+#set editor="vim -c 'set tw=70 et' '+/^$' " #enable auto spell 
+## Make Vim work with flowed text and add spell checking
+set editor='vim "+setlocal spell spelllang=en_gb fo+=aw"'
+set visual='vim "+setlocal spell spelllang=en_gb fo+=aw"'
+
+#searching using notmuch
+macro index S "<enter-command>unset wait_key<enter><shell-escape> ~/bin/mutt-notmuch-py.py ~/.mail/temporary/search<enter><change-folder-readonly>~/.mail/temporary/search<enter>" "search mail (using notmuch)"
+
+
+#======================================================#
+# Order of headers and what to show
+hdr_order Date: From: User-Agent: X-Mailer \
+          To: Cc: Reply-To: Subject:
+ignore *
+unignore Date: From: User-Agent: X-Mailer  \
+         To: Cc: Reply-To: Subject:
+auto_view text/html
+#auto_view text/x-vcard
+auto_view application/octet-stream
+#auto_view application/msword
+#html viewing handled by w3m in .mailcap file
+
+
+#======================================================#
+#PGP Stuff (Not configured)
+#set crypt_verify_sig="yes"
+#set pgp_sign_as="0x41D8CB10"
+#set crypt_autosign="yes"
+#set pgp_timeout="1800"
+
+
+#======================================================#
+# Odds and ends
+set markers          # mark wrapped lines of text in the pager with a +
+set smart_wrap       # Don't wrap mid-word
+set pager_context=5  # Retain 5 lines of previous page when scrolling.
+set status_on_top    # Status bar on top.
+push <show-version>  # Shows mutt version at startup
+set sort = 'threads'
+#set sort_aux = 'reverse-last-date-received'
+
+#     #
+#     # pager
+#     #
+#     # The builtin pager supports colour, which is nice. However, some of
+#     # its default behaviour can be confusing if one is used to the use of
+#     # less(1) as external pager.
+#     #
+#
+bind pager      b       previous-page   # Instead of bounce
+#       bind pager      G       bottom          # Previously unbound
+#
+bind pager      j       next-line       # Instead of next-message
+bind pager      k       previous-line   # Instead of
+bind pager      <down>  next-line
+bind pager      <up>    previous-line
+#       previous-message
+#       set pager_stop
+#
+#
+#       #
+#       # Other keybindings
+#       #
+#
+#       bind index      <       previous-page   # like strn's overview
+#       bind index      >       next-page
+
+# Sidebar Patch --------------------------------------
+#set sidebar_visible = yes
+#set sidebar_delim   = '  │'
+#set sidebar_width   = 24
+#color sidebar_new color221 color233
+
+###----------------------------------------------------------------------------
+### Aliases & Contact stuff
+###----------------------------------------------------------------------------
+
+
+## Contacts stuff
+# query command to use MacOSX Address book
+set query_command = "contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
+bind editor <Tab> complete-query
+bind editor ^T    complete
+
+# filters new messages through a shell script that automatically generates a 
+# mutt alias for new senders
+set display_filter=$HOME/.mutt/createalias.sh
+set alias_file=~/.mutt/aliases.txt
+
+#use urlview and ~/.urlview to open links in default browser
+#  using Ctrl-u
+macro pager \Cu "|urlview<enter>" "call urlview to open links"
+
+
+
+###----------------------------------------------------------------------------
+### pretification
+###----------------------------------------------------------------------------
+# Status Bar -----------------------------------------
+set status_chars  = " *%A"
+set status_format = '-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F    ?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---'
+
+#colours
+color indicator  brightyellow  red
+color indicator  black         white
+color search     default       green
+color error      brightred     default
+color tree       brightyellow  default       # thread arrows 
+color attachment brightmagenta default
+color tilde      magenta       default
+
+color index     blue	default    ~N # New
+color index     brightwhite    default       ~D
+
+color hdrdefault white         black         # headers white on black
+color header     green         black         ^From: # sender's name in green
+color header     yellow        black         ^To:
+color header     cyan          black         ^Subject:
+color quoted     cyan          black         # quoted text in blue
+color quoted1    magenta       default 
+color quoted2    yellow        default 
+color quoted3    green         default 
+color signature  magenta       black         # signature in red
+color body       cyan          default       "((ftp|http|https)://|news:)[^ >)\"\t]+"
+color body       cyan          default       "[-a-z_0-9.+]+@[-a-z_0-9.]+"
+color markers    brightyellow  default       # + at beginning of wrapped lines 
+color bold       red           default       # hiliting bold patterns in body 
+color underline  green         default       # hiliting underlined patterns in body
+
+#important people highlighting
+#Sanger
+color index	red	default	pnb@sanger.ac.uk
+color index	red	default	tjrc@sanger.ac.uk
+color index	red	default	ce1@sanger.ac.uk

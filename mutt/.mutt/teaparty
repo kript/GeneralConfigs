@@ -1,0 +1,12 @@
+set from = john@kript.net
+set hostname=kript.net
+#IMAP stuff
+set imap_user=john
+set folder=imaps://teaparty.net/mail
+set record="=Sent-`date +"%y%m"`"
+set postponed="=Drafts"
+set spoolfile=imaps://teaparty.net/INBOX
+#smtp config
+set smtp_url = "smtp://john@teaparty.net:587/"
+#mail presentation stuff
+set signature        = ~/.signature.teaparty

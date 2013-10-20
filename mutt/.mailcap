@@ -1,0 +1,21 @@
+text/html; ~/homebrew/bin/w3m -I %{charset} -T text/html -dump; copiousoutput;
+
+## Images
+image/jpeg;	/Users/jc18/bin/View_attachment.sh %s "-" '/Applications/Preview.app'
+image/pjpeg;	/Users/jc18/bin/View_attachment.sh %s "-" '/Applications/Preview.app'
+image/png;	/Users/jc18/bin/View_attachment.sh %s "-" '/Applications/Preview.app'
+image/gif;	/Users/jc18/bin/View_attachment.sh %s "-" '/Applications/Preview.app'
+
+## PDF
+application/pdf;	/Users/jc18/bin/View_attachment.sh %s "-" '/Applications/Preview.app'
+## Calender
+application/ics;	/Users/jc18/bin/View_attachment.sh %s "-" '/Applications/Calendar.app'
+
+## MS Word documents
+application/msword;	/Users/jc18/bin/View_attachment.sh %s "-" '/Applications/Microsoft\ Office\ 2011/Microsoft\ Word.app'
+application/vnd.openxm;	/Users/jc18/bin/View_attachment.sh %s "-" '/Applications/Microsoft\ Office\ 2011/Microsoft\ Word.app'
+#application/vnd.openxmlformats-officedocument.wordprocessingml.document;;	/Users/jc18/bin/View_attachment.sh %s "-" '/Applications/Microsoft\ Office\ 2011/Microsoft\ Word.app'
+
+# Unidentified files
+#application/octet-stream;	/Users/jc18/bin/View_attachment.sh %s "-" 
+application/*; /usr/bin/open "%s"
