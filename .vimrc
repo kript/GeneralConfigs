@@ -1,6 +1,7 @@
 "use \" for comments
 "get vim to load templates from this skeleton file area
 "  where extentions are defined
+filetype plugin indent on
 autocmd! BufNewFile * silent! 0r ~/.vim/skel/tmpl.%:e
 "enable syntax highlighting
 syntax on
@@ -16,3 +17,5 @@ set printoptions=paper:a4
 "only do spell checking in mutt emails however!
 autocmd FileType mail set spell
 autocmd FileType mail setlocal fo+=aw
+" turn off autoindenting etc when pasing in 
+set nopaste
