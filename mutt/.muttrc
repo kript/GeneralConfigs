@@ -19,6 +19,11 @@ source ~/.mutt/sanger.offlineimap
 macro index <F5> '<sync-mailbox><enter-command>source ~/.mutt/sanger.offlineimap<enter><change-folder>!<enter>'
 macro index <F6> '<sync-mailbox><enter-command>source ~/.mutt/teaparty<enter><change-folder>!<enter>'
 
+#allow us to poll mail from within mutt
+# Sync email
+macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
+macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
+
 
 set move=no
 
@@ -30,7 +35,9 @@ set copy
 unset confirmappend
 # unread mails retain "New" status
 set nomark_old
-
+#smime hack for more recent versions of Outlook
+set smime_verify_opaque_command="openssl smime -verify \
+                                 -inform DER -in %s -noverify"
 
 set imap_check_subscribed
 set mail_check = 120
@@ -58,6 +65,8 @@ set tilde
 #make EOL better as per http://wcm1.web.rice.edu/mutt-tips.html
 set text_flowed=yes
 
+#fortune stype addition to all mail signatures
+#folder-hook . set signature="signify|"
 
 #spelling stuff
 ## change spell default to one that recog mail headers
@@ -65,7 +74,7 @@ set ispell="~/homebrew/bin/aspell -e -c"
 #set editor="vim -c 'set tw=70 et' '+/^$' " #enable auto spell 
 ## Make Vim work with flowed text and add spell checking
 set editor='vim "+setlocal spell spelllang=en_gb fo+=aw"'
-set visual='vim "+setlocal spell spelllang=en_gb fo+=aw"'
+set visual='vim "+setlocal spell spelllang=en_gb fo+=aw set textwidth=0"'
 
 #searching using notmuch
 macro index S "<enter-command>unset wait_key<enter><shell-escape> ~/bin/mutt-notmuch-py.py ~/.mail/temporary/search<enter><change-folder-readonly>~/.mail/temporary/search<enter>" "search mail (using notmuch)"
