@@ -10,6 +10,7 @@ localrepository = SangerZuul-local
 remoterepository = SangerZuul-remote
 status_backend = sqlite
 postsynchook = notmuch new
+#disabling autorefresh for manual poll trial
 autorefresh = 5
 
 [Repository SangerZuul-local]
