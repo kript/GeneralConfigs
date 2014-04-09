@@ -18,4 +18,12 @@ set printoptions=paper:a4
 autocmd FileType mail set spell
 autocmd FileType mail setlocal fo+=aw
 " turn off autoindenting etc when pasing in 
-set nopaste
+set paste
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+"highlight when going over 80 chars
+match ErrorMsg '\%>80v.\+'
+set colorcolumn=80
+set textwidth=80
