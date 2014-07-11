@@ -48,7 +48,6 @@ set header_cache=~/.mutt/.muttcache
 # Display download progress every 5K
 set net_inc=5
 
-
 # See the headers when editing
 set edit_headers          
 
@@ -63,10 +62,11 @@ set mime_forward_rest = yes
 ##to indicate the end of file (the same way vim does)
 set tilde
 #make EOL better as per http://wcm1.web.rice.edu/mutt-tips.html
-set text_flowed=yes
+#set text_flowed=yes
 
 #fortune stype addition to all mail signatures
 #folder-hook . set signature="signify|"
+folder-hook . set signature="~/bin/fortune.sh|"
 
 #spelling stuff
 ## change spell default to one that recog mail headers
@@ -95,16 +95,18 @@ auto_view application/octet-stream
 
 
 #======================================================#
-#PGP Stuff (Not configured)
-#set crypt_verify_sig="yes"
-#set pgp_sign_as="0x41D8CB10"
+#PGP Stuff 
+source ~/.mutt/gpg.rc
+set crypt_verify_sig="yes"
+set pgp_sign_as="0x7DFDC902"
 #set crypt_autosign="yes"
-#set pgp_timeout="1800"
+set pgp_timeout="1800"
+
 
 
 #======================================================#
 # Odds and ends
-set markers          # mark wrapped lines of text in the pager with a +
+#set markers          # mark wrapped lines of text in the pager with a +
 set smart_wrap       # Don't wrap mid-word
 set pager_context=5  # Retain 5 lines of previous page when scrolling.
 set status_on_top    # Status bar on top.
@@ -127,6 +129,7 @@ bind pager      j       next-line       # Instead of next-message
 bind pager      k       previous-line   # Instead of
 bind pager      <down>  next-line
 bind pager      <up>    previous-line
+set pager_index_lines=6
 #       previous-message
 #       set pager_stop
 #
@@ -176,19 +179,19 @@ set status_format = '-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? D
 set date_format="%d %b %R"
 set index_format="%4C %Z %X %d %-15.15L %s"
 
-#colours
+##colours
 color indicator  brightyellow  red
-color indicator  black         white
+#color indicator  black         white
 color search     default       green
-color error      brightred     default
+#color error      brightred     default
 color tree       brightyellow  default       # thread arrows 
 color attachment brightmagenta default
 color tilde      magenta       default
-
-color index     blue	default    ~N # New
-color index     brightwhite    default       ~D
-
-color hdrdefault white         black         # headers white on black
+#
+color index     green   default    ~N # New
+#color index     brightwhite    default       ~D
+#
+#color hdrdefault white         black         # headers white on black
 color header     green         black         ^From: # sender's name in green
 color header     yellow        black         ^To:
 color header     cyan          black         ^Subject:
@@ -196,15 +199,16 @@ color quoted     cyan          black         # quoted text in blue
 color quoted1    magenta       default 
 color quoted2    yellow        default 
 color quoted3    green         default 
-color signature  magenta       black         # signature in red
-color body       cyan          default       "((ftp|http|https)://|news:)[^ >)\"\t]+"
-color body       cyan          default       "[-a-z_0-9.+]+@[-a-z_0-9.]+"
-color markers    brightyellow  default       # + at beginning of wrapped lines 
-color bold       red           default       # hiliting bold patterns in body 
-color underline  green         default       # hiliting underlined patterns in body
+#color signature  magenta       black         # signature in red
+#color body       cyan          default       "((ftp|http|https)://|news:)[^ >)\"\t]+"
+#color body       cyan          default       "[-a-z_0-9.+]+@[-a-z_0-9.]+"
+#color markers    brightyellow  default       # + at beginning of wrapped lines 
+#color bold       red           default       # hiliting bold patterns in body 
+#color underline  green         default       # hiliting underlined patterns in body
 
 #important people highlighting
 #Sanger
-color index	red	default	pnb@sanger.ac.uk
+color index	red	default	pw10@sanger.ac.uk
 color index	red	default	tjrc@sanger.ac.uk
 color index	red	default	ce1@sanger.ac.uk
+color index	red	default	gmpc@sanger.ac.uk

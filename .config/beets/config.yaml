@@ -1,0 +1,23 @@
+directory: /Volumes/MusicStick/music
+library: /Volumes/MusicStick/musiclibrary.blb
+plugins: fetchart lyrics convert duplicates web random info smartplaylist play
+convert:
+    ffmpeg: /Users/john/bin/ffmpeg
+    max_bitrate: 200
+    auto: true
+    dest: /Volumes/MusicStick/music
+smartplaylist:
+    #relative_to: /Volumes/MusicStick/music
+    playlist_dir: /Volumes/MusicStick/playlists
+    playlists:
+        - name: all.m3u
+          query: ''
+
+        - name: 'ReleasedIn$year.m3u'
+          query: 'year::20(0|1)(0|1|2|3|4)'
+        - name: 'kids.m3u'
+          query: 'genre::kids'
+        - name: 'no_kids.m3u'
+          query: 'genre::^(?!kids)'
+play:
+    command: /Applications/VLC.app/Contents/MacOS/VLC

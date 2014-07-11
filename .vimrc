@@ -17,6 +17,8 @@ set printoptions=paper:a4
 "only do spell checking in mutt emails however!
 autocmd FileType mail set spell
 autocmd FileType mail setlocal fo+=aw
+" set autowrap in emails
+autocmd FileType mail set wrap
 " turn off autoindenting etc when pasing in 
 set paste
 set tabstop=4
