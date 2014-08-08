@@ -1,33 +1,72 @@
 source ~/perl5/perlbrew/etc/bashrc
 
-# append to the history file, don't overwrite it
-mkdir -p ~/.history
-shopt -s histappend
-shopt -s cmdhist
+#add path for local homebrew directory
+export PATH=/Users/jc18/homebrew/bin:$PATH
+#add path for ~/Applications directory
+export PATH=/Users/jc18/Applications:$PATH
+#add path for ~/bin directory
+export PATH=/Users/jc18/bin:$PATH
+#add path for local python modules
+#export PATH=/Users/jc18/Library/Python/2.7/bin/:$PATH
 
-export HISTFILE=~/.history/`date +%Y-%m-%d`.hist
-PROMPT_COMMAND="history -n;history -a"
+#PROMPT_COMMAND="history -n;history -a"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-#disabled for a sanger enviornment and the stat calls make this a nightmare on are larger NFS shares..
+#perlbrew use perl-5.12.4
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        # We have color support; assume it's compliant with Ecma-48
-        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-        # a case would tend to support setf rather than setaf.)
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
+#switch to using Joe's proxy variant
+#only enable the proxies if we're on internal LAN
+#SangerWireless="(WTSI Wireless)"
+#SangerWired="(Sanger Wired)"
+#wirelessLAN=`scselect | grep " \*" | cut -f2`
+#
+#if [ "$wirelessLAN" == "$SangerWireless" ]
+#	then
+#		echo "enabling proxies"
+#		http_proxy=wwwcache.sanger.ac.uk:3128
+#		export http_proxy
+#		https_proxy=wwwcache.sanger.ac.uk:3128
+#		export https_proxy
+#	else
+#		echo "disabling proxies"
+#fi
+
+#===Start===
+
+proxy_on()
+        {
+        echo "enabling proxies"
+        http_proxy=wwwcache.sanger.ac.uk:3128
+        export http_proxy
+        https_proxy=wwwcache.sanger.ac.uk:3128
+        export https_proxy
+        export no_proxy=sanger.ac.uk
+        }
+
+proxy_off()
+        {
+        echo "disabling proxies"
+        unset http_proxy
+        unset https_proxy
+        }
+
+
+#only enable the proxies if we're on internal LAN/VPN
+if ping -c 1 wwwcache.sanger.ac.uk &> /dev/null
+then
+        proxy_on
+else
+        proxy_off
 fi
-unset color_prompt force_color_prompt
 
-perlbrew use perl-5.12.4
+
+#===FIN===
+
+
+alias mutt='title "Mutt"; cd ~/Downloads && mutt'
+alias offlineimap='title "OfflineIMAP"; offlineimap'
+alias dnsgrep='ssh it-admin dig -t axfr internal.sanger.ac.uk | grep $2'
+alias irods_test='csshX -screen 2 -l root isg-dev4 isg-dev5'
