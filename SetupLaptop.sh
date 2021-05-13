@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 # install packages
-sudo apt-get install rclone dislocker ecryptfs-utils cryptsetup curl git git-man pwgen tree atop
+sudo apt-get install rclone dislocker ecryptfs-utils cryptsetup curl git git-man pwgen tree atop debian-keyring parcimonie keychain sshpass 
 sudo snap install docker
 # lenovo specific stuff if not already installed.
 sudo ubuntu-drivers install lenovo-doc-addison-p15vg1-t15pg1
@@ -35,14 +35,12 @@ op signin https://my.1password.com john@kript.net
 #eval $(op signin my)
 # docs: https://support.1password.com/command-line-getting-started/
 
-# docker setup stuff
+# docker stuff
 portainer_admin=$(pwgen 8 1)
 echo $portainer_admin > ~/.portainer_admin
 echo $portainer_admin > /tmp/portainer_password
+docker run -d -p 9000:9000 -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/portainer_password:/tmp/portainer_password portainer/portainer --admin-password-file /tmp/portainer_password
 
-docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
-
-$ docker run -d -p 9000:9000 -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/portainer_password:/tmp/portainer_password portainer/portainer --admin-password-file /tmp/portainer_password
 # setup ssh
 ssh-keygen
 ssh-add
@@ -51,4 +49,28 @@ mkdir -p ~/code
 #for d in $(cat repos.txt | cut -d: -f2 | cut -d/ -f1); do mkdir -p ~/code/github/"${d}"; done
 awk -F'\/|(\.git)' '{system( "cd ~/code/ && git clone " $0)}' repos.txt
 
+#Namecheap VPN
+cd ~/Downloads/
+wget https://vpn.ncapi.io/groupedServerList.zip
+unzip groupedServerList.zip
+echo "setup VPN  profile as per https://www.namecheap.com/support/knowledgebase/article.aspx/10205/2246/namecheap-vpn-openvpn-setup-linux-ubuntu-18/ "
 
+# Generic GNUPG Stuff
+cp .gnupg/gpg.conf ~/gnupg/
+cat >> ~/.gnupg/dirmngr.conf  <<EOL
+keyserver hkp://jirk5u4osbsr34t5.onion
+EOL
+/usr/bin/parcimonie &
+echo "dont forget to restore your GPG private key!"
+
+#TOR Project
+gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org
+gpg --output ./tor.keyring --export 0xEF6E286DDA85EA2A4BA7DE684E2C6E8793298290
+wget https://dist.torproject.org/torbrowser/10.0.16/tor-browser-linux64-10.0.16_en-US.tar.xz.asc
+# verify with https://support.torproject.org/tbb/how-to-verify-signature/
+
+# TAILS (just in case)
+wget https://tails.boum.org/tails-signing.key
+gpg --import < tails-signing.key
+gpg --keyring=/usr/share/keyrings/debian-keyring.gpg --export chris@chris-lamb.co.uk | gpg --import
+gpg --keyid-format 0xlong --check-sigs A490D0F4D311A4153E2BB7CADBB802B258ACD84F
