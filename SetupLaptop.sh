@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 # install packages
-sudo apt-get install rclone dislocker ecryptfs-utils cryptsetup curl git git-man pwgen tree atop debian-keyring parcimonie keychain sshpass 
+sudo apt-get install rclone dislocker ecryptfs-utils cryptsetup curl git git-man pwgen tree atop debian-keyring parcimonie keychain sshpass apt-transport-https python3-venv 
 sudo snap install docker
 # lenovo specific stuff if not already installed.
 sudo ubuntu-drivers install lenovo-doc-addison-p15vg1-t15pg1
@@ -74,3 +74,8 @@ wget https://tails.boum.org/tails-signing.key
 gpg --import < tails-signing.key
 gpg --keyring=/usr/share/keyrings/debian-keyring.gpg --export chris@chris-lamb.co.uk | gpg --import
 gpg --keyid-format 0xlong --check-sigs A490D0F4D311A4153E2BB7CADBB802B258ACD84F
+
+# dangerzone containerized document extraction
+curl -L https://packagecloud.io/firstlookmedia/code/gpgkey | sudo apt-key add -
+echo "deb https://packagecloud.io/firstlookmedia/code/ubuntu/ focal main" | sudo tee -a /etc/apt/sources.list.d/firstlookmedia_code.list
+sudo apt install -y dangerzone
