@@ -3,6 +3,7 @@ set -euo pipefail
 # install packages
 sudo apt-get install rclone dislocker ecryptfs-utils cryptsetup curl git git-man pwgen tree atop debian-keyring parcimonie keychain sshpass apt-transport-https python3-venv xclip
 sudo snap install docker
+sudo snap install tusk
 # lenovo specific stuff if not already installed.
 sudo ubuntu-drivers install lenovo-doc-addison-p15vg1-t15pg1
 # install 1password
