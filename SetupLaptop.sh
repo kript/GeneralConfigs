@@ -81,3 +81,10 @@ gpg --keyid-format 0xlong --check-sigs A490D0F4D311A4153E2BB7CADBB802B258ACD84F
 curl -L https://packagecloud.io/firstlookmedia/code/gpgkey | sudo apt-key add -
 echo "deb https://packagecloud.io/firstlookmedia/code/ubuntu/ focal main" | sudo tee -a /etc/apt/sources.list.d/firstlookmedia_code.list
 sudo apt install -y dangerzone
+
+# VGDrive Google Drive Client
+cd /tmp
+sudo apt-get install libgranite-common libgranite5 contractor 
+curl -sLO https://github.com/bcedu/VGrive/releases/download/1.6.0/com.github.bcedu.vgrive_1.6.0_amd64.deb 
+sudo dpkg -i com.github.bcedu.vgrive_1.6.0_amd64.deb
+
