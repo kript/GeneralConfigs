@@ -87,4 +87,5 @@ cd /tmp
 sudo apt-get install libgranite-common libgranite5 contractor 
 curl -sLO https://github.com/bcedu/VGrive/releases/download/1.6.0/com.github.bcedu.vgrive_1.6.0_amd64.deb 
 sudo dpkg -i com.github.bcedu.vgrive_1.6.0_amd64.deb
+echo "Run vgdrive from GUi to setup"
 
