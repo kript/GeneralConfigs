@@ -86,4 +86,5 @@ sudo apt install -y dangerzone
 sudo add-apt-repository ppa:nilarimogard/webupd8
 sudo apt-get update
 sudo apt-get install grive
-
+mkdir -p ~/grive
+echo "remember to run 'grive -a' in ~/grive to setup sync"
