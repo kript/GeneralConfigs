@@ -82,10 +82,8 @@ curl -L https://packagecloud.io/firstlookmedia/code/gpgkey | sudo apt-key add -
 echo "deb https://packagecloud.io/firstlookmedia/code/ubuntu/ focal main" | sudo tee -a /etc/apt/sources.list.d/firstlookmedia_code.list
 sudo apt install -y dangerzone
 
-# VGDrive Google Drive Client
-cd /tmp
-sudo apt-get install libgranite-common libgranite5 contractor 
-curl -sLO https://github.com/bcedu/VGrive/releases/download/1.6.0/com.github.bcedu.vgrive_1.6.0_amd64.deb 
-sudo dpkg -i com.github.bcedu.vgrive_1.6.0_amd64.deb
-echo "Run vgdrive from GUi to setup"
+# Install grive google drive command line client
+sudo add-apt-repository ppa:nilarimogard/webupd8
+sudo apt-get update
+sudo apt-get install grive
 
